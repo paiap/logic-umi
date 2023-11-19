@@ -1,0 +1,37 @@
+{
+  "private": true,
+  "author": "panan183panan <3234059020@qq.com>",
+  "scripts": {
+    "dev": "max dev",
+    "build": "max build",
+    "format": "prettier --cache --write .",
+    "prepare": "husky install",
+    "postinstall": "max setup",
+    "setup": "max setup",
+    "start": "npm run dev"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.0.1",
+    "@ant-design/pro-components": "^2.4.4",
+    "@antv/g2": "^5.1.5",
+    "@antv/g2plot": "^2.4.31",
+    "@logicflow/core": "^1.2.7",
+    "@logicflow/extension": "^1.2.7",
+    "@umijs/max": "^4.0.69",
+    "antd": "^5.4.0",
+    "react": "18.x",
+    "react-dom": "18.x",
+    "umi-request": "^1.4.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.33",
+    "@types/react-dom": "^18.0.11",
+    "@umijs/plugin-qiankun": "^2.43.3",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
+    "prettier": "^2.8.7",
+    "prettier-plugin-organize-imports": "^3.2.2",
+    "prettier-plugin-packagejson": "^2.4.3",
+    "typescript": "^5.0.3"
+  }
+}
