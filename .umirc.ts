@@ -1,3 +1,11 @@
+/*
+ * @creater: panan
+ * @message: 
+ * @since: 2023-11-18 19:21:55
+ * @LastAuthor: panan panan2001@outlook.com
+ * @lastTime: 2023-11-20 14:39:40
+ * @文件相对于项目的路径: /logic-umi/.umirc.ts
+ */
 import { defineConfig } from '@umijs/max';
 
 export default defineConfig({
@@ -25,19 +33,24 @@ export default defineConfig({
       component: './Architecture',
     },
     {
-      name: ' CRUD示例',
+      name: 'CRUD示例',
       path: '/table',
       component: './Table',
     },
     {
-      name: ' proTable测试',
+      name: 'proTable测试',
       path: '/protable',
       component: './ProTable',
     },
     {
-      name: ' myProTable',
+      name: 'myProTable',
       path: '/myprotable',
       component: './Package',
+    },
+    {
+      name: '测试调研',
+      path: '/test',
+      component: './Text',
     },
   ],
   npmClient: 'yarn',
