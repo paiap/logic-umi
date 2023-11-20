@@ -3,7 +3,7 @@
  * @message: 测试调研组件
  * @since: 2023-11-20 14:36:53
  * @LastAuthor: panan panan2001@outlook.com
- * @lastTime: 2023-11-20 16:26:11
+ * @lastTime: 2023-11-20 20:47:23
  * @文件相对于项目的路径: /logic-umi/src/pages/Text/index.tsx
  */
 import { Sankey } from '@antv/g2plot';
@@ -22,6 +22,10 @@ const Text: FC<IText> = () => {
     render()
   }, [dataSource])
 
+  /**
+   * @function message: 调用接口
+   * @return {*}
+   */
   const fetchData = () => {
     fetch('https://gw.alipayobjects.com/os/bmw-prod/fa3414cc-75ed-47b4-8306-f2ffe8c40127.json')
       .then((res) => res.json())
@@ -30,6 +34,10 @@ const Text: FC<IText> = () => {
       });
   }
 
+  /**
+   * @function message: 渲染图表函数
+   * @return {*}
+   */
   const render = () => {
     if (sankeyRef.current) {
       sankeyRef.current.changeData(dataSource)
