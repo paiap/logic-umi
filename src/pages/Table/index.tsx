@@ -16,8 +16,9 @@ const { addUser, queryUserList, deleteUser, modifyUser } =
   services.UserController;
 
 /**
- * 添加节点
- * @param fields
+ * @function message: 添加节点
+ * @param {API} fields
+ * @return {*}
  */
 const handleAdd = async (fields: API.UserInfo) => {
   const hide = message.loading('正在添加');

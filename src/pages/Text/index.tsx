@@ -3,10 +3,10 @@
  * @message: 测试调研组件
  * @since: 2023-11-20 14:36:53
  * @LastAuthor: panan panan2001@outlook.com
- * @lastTime: 2023-11-20 20:47:23
+ * @lastTime: 2023-11-22 14:53:02
  * @文件相对于项目的路径: /logic-umi/src/pages/Text/index.tsx
  */
-import { Sankey } from '@antv/g2plot';
+import { Bar } from '@antv/g2plot';
 import React, { FC, useEffect, useRef, useState } from 'react'
 type IText = Record<string, any>
 
@@ -27,11 +27,34 @@ const Text: FC<IText> = () => {
    * @return {*}
    */
   const fetchData = () => {
-    fetch('https://gw.alipayobjects.com/os/bmw-prod/fa3414cc-75ed-47b4-8306-f2ffe8c40127.json')
-      .then((res) => res.json())
-      .then((data) => {
-        setDataSource(data)
-      });
+    // fetch('https://gw.alipayobjects.com/os/bmw-prod/fa3414cc-75ed-47b4-8306-f2ffe8c40127.json')
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setDataSource(data)
+    //   });
+    const data = [
+      {
+        type: '家具家电',
+        sales: 38,
+        machines: 4
+      },
+      {
+        type: '粮油副食',
+        sales: 52,
+        machines: 6
+      },
+      {
+        type: '生鲜水果',
+        sales: 61,
+        machines: 2
+      },
+      {
+        type: '美容洗护',
+        sales: 145,
+        machines: 5
+      },
+    ];
+    setDataSource(data)
   }
 
   /**
@@ -43,19 +66,25 @@ const Text: FC<IText> = () => {
       sankeyRef.current.changeData(dataSource)
       return
     }
-    const sankey = new Sankey('container', {
+    const barPlot = new Bar('container', {
       data: dataSource || [],
-      sourceField: 'source',
-      targetField: 'target',
-      weightField: 'value',
-      color: ['red', 'green', 'yellow'],
-      edgeStyle: {
-        fill: '#ccc',
-        fillOpacity: 0.4,
+      xField: 'sales',
+      yField: 'type',
+      // widthField:'machines',
+      barWidthRatio: 0.8,
+      meta: {
+        type: {
+          alias: '类别',
+        },
+        sales: {
+          alias: '销售额',
+        },
       },
     });
-    sankeyRef.current = sankey;
-    sankey.render();
+
+    barPlot.render();
+    sankeyRef.current = barPlot;
+    barPlot.render();
   }
   return (
     <div id='container'></div>
