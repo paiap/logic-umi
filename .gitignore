@@ -17,3 +17,5 @@
 /examples/app2/node_modules
 /examples/app3/node_modules
 /examples/master/node_modules
+.idea
+.vscode
