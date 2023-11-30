@@ -3,7 +3,7 @@
  * @message: 测试调研组件
  * @since: 2023-11-20 14:36:53
  * @LastAuthor: panan panan2001@outlook.com
- * @lastTime: 2023-11-22 14:53:02
+ * @lastTime: 2023-11-26 20:37:39
  * @文件相对于项目的路径: /logic-umi/src/pages/Text/index.tsx
  */
 import { Bar } from '@antv/g2plot';
@@ -13,14 +13,6 @@ type IText = Record<string, any>
 const Text: FC<IText> = () => {
   const [dataSource, setDataSource] = useState<any[]>()
   const sankeyRef = useRef<any>(null)
-  useEffect(() => {
-    fetchData()
-  }, [])
-
-  useEffect(() => {
-    if (!dataSource) return
-    render()
-  }, [dataSource])
 
   /**
    * @function message: 调用接口
@@ -86,6 +78,16 @@ const Text: FC<IText> = () => {
     sankeyRef.current = barPlot;
     barPlot.render();
   }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    if (!dataSource) return
+    render()
+  }, [dataSource])
+
   return (
     <div id='container'></div>
   )
