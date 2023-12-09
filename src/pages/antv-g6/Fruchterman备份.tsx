@@ -3,14 +3,15 @@
  * @message: antv/g6调研
  * @since: 2023-12-06 14:12:29
  * @LastAuthor: panan panan2001@outlook.com
- * @lastTime: 2023-12-09 17:01:39
- * @文件相对于项目的路径: /logic-umi/src/pages/antv-g6/Fruchterman.tsx
+ * @lastTime: 2023-12-08 17:32:36
+ * @文件相对于项目的路径: /logic-umi/src/pages/antv-g6/Fruchterman备份.tsx
  */
 
 import { Edge, Graph, Node, Tooltip } from '@antv/g6';
 import React, { FC, useEffect, useRef, useState } from 'react'
 import { mockData } from './mock'
 import { Button, Col, Input, Row, Select, Space, message } from 'antd';
+import Poup from './Poup';
 import { Form } from 'antd';
 import { createRoot } from 'react-dom/client';
 
@@ -42,117 +43,10 @@ const strokes = [
 
 
 const AntvG6: FC<Record<string, any>> = () => {
+  const [data, setData] = useState<any>()
   const nodeRef = useRef<Graph>()
   const clusterMapRef = useRef<Map<string, any>>()
   const [form] = Form.useForm()
-
-  // 弹窗组件
-  const GetComp = ({ item }: any): React.ReactElement<HTMLDivElement> => {
-    return (
-      <>
-        <h4>Content</h4>
-        <ul>
-          <li>Type: ${item.item.getType()}</li>
-        </ul>
-        <ul>
-          <li>Label: ${item.item.getModel().label || item.item.getModel().id}</li>
-        </ul>
-        <Button type='primary' onClick={() => message.info(`antd组件使用${item.item.getModel().label || item.item.getModel().id}`)}>antd组件使用</Button>
-      </>
-    )
-  }
-
-  const tooltip = new Tooltip({
-    offsetX: 10,
-    offsetY: 10,
-    // v4.2.1 起支持配置 trigger，click 代表点击后出现 tooltip。默认为 mouseenter
-    trigger: 'click',
-    // the types of items that allow the tooltip show up
-    // 允许出现 tooltip 的 item 类型
-    itemTypes: ['node', 'edge'],
-    // custom the tooltip's content
-    // 自定义 tooltip 内容
-    getContent: (e: any) => {
-      const outDiv = document.createElement('div');
-      const root = createRoot(outDiv);
-      // 挂载弹窗组件
-      root.render(<GetComp item={e} />)
-      return outDiv;
-    },
-  });
-
-  const addListener = (graph: Graph) => {
-    // graph.on('node:click', (ev) => {
-    //   const node = ev.item as Node; // 被点击的节点元素
-    //   console.log(node.getID())
-    // });
-
-    graph.on('node:mousemove', (ev) => {
-      const node = ev.item as Node; // 被点击的节点元素
-      // const shape = ev.target; // 被点击的图形，可根据该信息作出不同响应，以达到局部响应效果
-      graph.updateItem(node, {
-        style: {
-          fill: '#6DC8EC',
-        },
-      })
-
-      const inEdges = node.getInEdges() as Edge[]
-      const outEdges = node.getOutEdges() as Edge[]
-      // 所有入边
-      inEdges.forEach((inEdge: Edge) => {
-        const inNode = inEdge.getSource()
-        console.log('指向该节点的节点', inNode)
-      })
-
-      // 所有出边
-      outEdges.forEach((outEdge: Edge) => {
-        const outNode = outEdge.getTarget() as Node
-        // console.log('该节点指向的节点', outNode)
-        graph.updateItem(outNode, {
-          style: {
-            fill: '#9270CA'
-          }
-        })
-      })
-      // 获取节点数据源
-    });
-
-    graph.on('node:mouseout', (ev) => {
-      const node = ev.item as Node; // 被点击的节点元素
-      // const shape = ev.target; // 被点击的图形，可根据该信息作出不同响应，以达到局部响应效果
-      const { cluster } = node.getModel()
-      if (!clusterMapRef.current) return
-      const colorId = clusterMapRef.current.get(cluster as string)
-      // node.style.fill = colors[cid % colors.length];
-      // node.style.stroke = strokes[cid % strokes.length];
-      graph.updateItem(node, {
-        style: {
-          fill: colors[colorId % colors.length],
-          stroke: strokes[colorId % strokes.length]
-        },
-      })
-      const inEdges = node.getInEdges() as Edge[]
-      const outEdges = node.getOutEdges() as Edge[]
-      // 所有入边
-      inEdges.forEach((inEdge: Edge) => {
-        const inNode = inEdge.getSource()
-        console.log(inNode)
-      })
-      // 所有出边
-      outEdges.forEach((outEdge: Edge) => {
-        const outNode = outEdge.getTarget() as Node
-        const { cluster } = outNode.getModel()
-        if (!clusterMapRef.current) return
-        const colorId = clusterMapRef.current.get(cluster as string)
-        graph.updateItem(outNode, {
-          style: {
-            fill: colors[colorId % colors.length],
-            stroke: strokes[colorId % strokes.length]
-          },
-        })
-      })
-    });
-  }
 
 
   useEffect(() => {
@@ -203,8 +97,8 @@ const AntvG6: FC<Record<string, any>> = () => {
           type: 'force',// 指定为力导向布局
           linkDistance: 50,// 指定边距离为100
           preventOverlap: true,// 防止节点重叠
-          // nodeStrength: -20,
-          // edgeStrength: 0.1,
+          nodeStrength: -20,
+          edgeStrength: 0.1,
         },
         animate: true,
         defaultEdge: {
@@ -232,9 +126,120 @@ const AntvG6: FC<Record<string, any>> = () => {
     }
   }, [])
 
+  const addListener = (graph: Graph) => {
+    // graph.on('node:click', (ev) => {
+    //   const node = ev.item as Node; // 被点击的节点元素
+    //   console.log(node.getID())
+    // });
+
+    graph.on('node:mousemove', (ev) => {
+      const node = ev.item as Node; // 被点击的节点元素
+      setData(node.getModel())
+      // const shape = ev.target; // 被点击的图形，可根据该信息作出不同响应，以达到局部响应效果
+      graph.updateItem(node, {
+        style: {
+          fill: '#6DC8EC',
+        },
+      })
+
+      const inEdges = node.getInEdges() as Edge[]
+      const outEdges = node.getOutEdges() as Edge[]
+      // 所有入边
+      inEdges.forEach((inEdge: Edge) => {
+        const inNode = inEdge.getSource()
+        // console.log('指向该节点的节点', inNode)
+      })
+
+      // 所有出边
+      outEdges.forEach((outEdge: Edge) => {
+        const outNode = outEdge.getTarget() as Node
+        // console.log('该节点指向的节点', outNode)
+        graph.updateItem(outNode, {
+          style: {
+            fill: '#9270CA'
+          }
+        })
+      })
+      // 获取节点数据源
+    });
+
+    graph.on('node:mouseout', (ev) => {
+      const node = ev.item as Node; // 被点击的节点元素
+      // const shape = ev.target; // 被点击的图形，可根据该信息作出不同响应，以达到局部响应效果
+      const { cluster } = node.getModel()
+      if (!clusterMapRef.current) return
+      const colorId = clusterMapRef.current.get(cluster as string)
+      // node.style.fill = colors[cid % colors.length];
+      // node.style.stroke = strokes[cid % strokes.length];
+      graph.updateItem(node, {
+        style: {
+          fill: colors[colorId % colors.length],
+          stroke: strokes[colorId % strokes.length]
+        },
+      })
+
+
+      const inEdges = node.getInEdges() as Edge[]
+      const outEdges = node.getOutEdges() as Edge[]
+      // 所有入边
+      inEdges.forEach((inEdge: Edge) => {
+        const inNode = inEdge.getSource()
+      })
+
+      // 所有出边
+      outEdges.forEach((outEdge: Edge) => {
+        const outNode = outEdge.getTarget() as Node
+        const { cluster } = outNode.getModel()
+        if (!clusterMapRef.current) return
+        const colorId = clusterMapRef.current.get(cluster as string)
+        graph.updateItem(outNode, {
+          style: {
+            fill: colors[colorId % colors.length],
+            stroke: strokes[colorId % strokes.length]
+          },
+        })
+      })
+    });
+  }
+
   const handleSearch = () => {
     const formData = form.getFieldsValue()
     console.log(formData)
+  }
+
+  const tooltip = new Tooltip({
+    offsetX: 10,
+    offsetY: 10,
+    // v4.2.1 起支持配置 trigger，click 代表点击后出现 tooltip。默认为 mouseenter
+    trigger: 'click',
+    // the types of items that allow the tooltip show up
+    // 允许出现 tooltip 的 item 类型
+    itemTypes: ['node', 'edge'],
+    // custom the tooltip's content
+    // 自定义 tooltip 内容
+    getContent: (e: any) => {
+      const outDiv = document.createElement('div');
+      const root = createRoot(outDiv);
+      // 挂载弹窗组件
+      root.render(<GetComp item={e} />)
+      return outDiv;
+    },
+  });
+
+  // 弹窗组件
+  const GetComp = ({ item }: any): React.ReactElement<HTMLDivElement> => {
+    return (
+      <>
+        <h4>Content</h4>
+        <ul>
+          <li>Type: ${item.item.getType()}</li>
+        </ul>
+        <ul>
+          <li>Label: ${item.item.getModel().label || item.item.getModel().id}</li>
+        </ul>
+        <Button type='primary' onClick={() => message.info(`antd组件使用${item.item.getModel().label || item.item.getModel().id}`)}>antd组件使用</Button>
+      </>
+    )
   }
 
   return (

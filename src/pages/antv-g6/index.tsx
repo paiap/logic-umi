@@ -3,17 +3,18 @@
  * @message: antv/g6调研
  * @since: 2023-12-06 14:12:29
  * @LastAuthor: panan panan2001@outlook.com
- * @lastTime: 2023-12-07 11:19:41
+ * @lastTime: 2023-12-09 17:02:23
  * @文件相对于项目的路径: /logic-umi/src/pages/antv-g6/index.tsx
  */
 
-import G6, { Graph, Item, Node, Edge, Tooltip } from '@antv/g6';
+import { Graph, Node, Tooltip } from '@antv/g6';
 import React, { FC, useEffect, useRef } from 'react'
-import { Button, message } from 'antd';
+import { Button, Form, Input, Select, Space, message } from 'antd';
 import { data } from './mock'
 import { createRoot } from "react-dom/client";
 
 const AntvG6: FC<Record<string, any>> = () => {
+  const [form] = Form.useForm()
   const nodeRef = useRef<Graph>()
 
   const main = (graph: Graph) => {
@@ -107,6 +108,22 @@ const AntvG6: FC<Record<string, any>> = () => {
     // });
   }
 
+    // 弹窗组件
+    const GetComp = ({ item }: any): React.ReactElement<HTMLDivElement> => {
+      return (
+        <>
+          <h4>Content</h4>
+          <ul>
+            <li>Type: ${item.item.getType()}</li>
+          </ul>
+          <ul>
+            <li>Label: ${item.item.getModel().label || item.item.getModel().id}</li>
+          </ul>
+          <Button type='primary' onClick={() => message.info(`antd组件使用${item.item.getModel().label || item.item.getModel().id}`)}>antd组件使用</Button>
+        </>
+      )
+    }
+
   const tooltip = new Tooltip({
     offsetX: 10,
     offsetY: 10,
@@ -125,22 +142,6 @@ const AntvG6: FC<Record<string, any>> = () => {
       return outDiv;
     },
   });
-
-  // 弹窗组件
-  const GetComp = ({ item }: any): React.ReactElement<HTMLDivElement> => {
-    return (
-      <>
-        <h4>Content</h4>
-        <ul>
-          <li>Type: ${item.item.getType()}</li>
-        </ul>
-        <ul>
-          <li>Label: ${item.item.getModel().label || item.item.getModel().id}</li>
-        </ul>
-        <Button type='primary' onClick={() => message.info(`antd组件使用${item.item.getModel().label || item.item.getModel().id}`)}>antd组件使用</Button>
-      </>
-    )
-  }
 
   useEffect(() => {
     if (nodeRef.current) {
@@ -238,8 +239,50 @@ const AntvG6: FC<Record<string, any>> = () => {
         };
     }
   }, [])
+
+  const handleSearch = () => {
+    const formData = form.getFieldsValue()
+    console.log(formData)
+  }
   return (
-    <div id="mountNode" ></div>
+    <>
+      <Form form={form}>
+        <Space>
+        <Form.Item name='cluster'>
+            <Select
+              style={{ minWidth: '200px' }}
+              placeholder='集群搜索'
+              options={[]}
+            />
+          </Form.Item>
+          <Form.Item
+            name='name'
+          >
+            <Input
+              style={{ minWidth: '200px' }}
+              placeholder='租户名搜索'
+            />
+          </Form.Item>
+          <Form.Item name='nameAdmin'>
+            <Input
+              style={{ minWidth: '200px' }}
+              placeholder='租户名管理员搜索'
+            />
+          </Form.Item>
+          <Form.Item name='select'>
+            <Select
+              style={{ minWidth: '200px' }}
+              placeholder='按条件搜索'
+              options={[]}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button type='primary' onClick={handleSearch}>搜索</Button>
+          </Form.Item>
+        </Space>
+      </Form>
+      <div id="mountNode" ></div>
+    </>
   )
 }
 

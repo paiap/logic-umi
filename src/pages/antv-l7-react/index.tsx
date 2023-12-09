@@ -3,7 +3,7 @@
  * @message: 测试调研组件
  * @since: 2023-11-20 14:36:53
  * @LastAuthor: panan panan2001@outlook.com
- * @lastTime: 2023-12-07 11:09:16
+ * @lastTime: 2023-12-08 11:27:45
  * @文件相对于项目的路径: /logic-umi/src/pages/antv-l7-react/index.tsx
  */
 import React, { FC, useEffect, useRef, useState } from 'react'
@@ -17,16 +17,17 @@ import {
   MapThemeControl,
   useScene
 } from '@antv/larkmap';
-import { Col, Row, Select } from 'antd';
-import { data, RootObject } from './sandain'
-import Test from './Test';
+import { Col, Input, Row, Select, Space, Switch, Tabs, TabsProps } from 'antd';
+import { mapData, RootObject, Location, ClusterCode } from './sandain'
+import Mainer from './Mainer';
+import MapPoup from './MapPoup';
 
 const config: LarkMapProps = {
   mapType: 'Gaode',
   mapOptions: {
     token: "20dd5b16f9d55538324bd56e5338b4cf",
     pitch: 20,
-    style: 'light',
+    style: 'darkblue',
     center: [120.21201, 30.2084],
     zoom: 11,
   },
@@ -35,7 +36,7 @@ const config: LarkMapProps = {
 
 const Text: FC<Record<string, any>> = () => {
 
-  const [dataSource, setDataSource] = useState<RootObject[]>([])
+  const [dataSource, setDataSource] = useState<RootObject>()
   const [options, setOptions] = useState<any[]>([])
   const [location, setLocation] = useState<Array<number>>([])
 
@@ -44,12 +45,15 @@ const Text: FC<Record<string, any>> = () => {
   }, [])
 
   useEffect(() => {
-    if (dataSource.length === 0) return
+    if (!dataSource) return
 
-    const newOption = dataSource.map((item: RootObject) => {
+    const { location = [] as Location[] } = dataSource
+
+
+    const newOption = location.map((item: Location) => {
       return {
-        label: item.FullName,
-        value: `${item.Longitude}_${item.Latitude}`,
+        label: item.name,
+        value: `${item.longitude}_${item.latitude}`,
       }
     })
     setOptions(newOption)
@@ -60,7 +64,7 @@ const Text: FC<Record<string, any>> = () => {
    * @return {*}
    */
   const fetchData = () => {
-    setDataSource(data)
+    setDataSource(mapData)
   }
 
   const handleChangeLocation = (val: string) => {
@@ -72,18 +76,41 @@ const Text: FC<Record<string, any>> = () => {
 
   return (
     <>
-      <Row gutter={[16, 16]} style={{ height: '100%' }}>
-        <Col span={24}>
-          <Select
-            options={options}
-            style={{ minWidth: '300px' }}
-            placeholder="请选择集群所在地点"
-            onChange={handleChangeLocation}
-          />
+      <Row gutter={[16, 16]} style={{ height: '100%' }} justify='space-between'>
+        <Col span={12}>
+          <div style={{ lineHeight: '32px' }}>
+            <Space>
+              <span>正式集群数: {dataSource?.prodNormal || 0}/{`${(dataSource?.prodNormal || 0) + (dataSource?.prodAbnormal || 0)}`}</span>
+              <span>测试集群数: {dataSource?.testNormal || 0}/{`${(dataSource?.testNormal || 0) + (dataSource?.testAbnormal || 0)}`}</span>
+              <span>预发布集群数: {dataSource?.stagingNormal || 0}/{`${(dataSource?.stagingNormal || 0) + (dataSource?.stagingAbnormal || 0)}`}</span>
+              <span>开发集群数: {dataSource?.devNormal || 0}/{`${(dataSource?.devNormal || 0) + (dataSource?.devAbnormal || 0)}`}</span>
+            </Space>
+          </div>
+        </Col>
+        <Col span={12} pull={0}>
+          <Space>
+            <Input.Search
+              style={{ minWidth: '220px' }}
+              placeholder="搜索集群"
+            />
+            <Select
+              options={options}
+              style={{ minWidth: '220px' }}
+              placeholder="筛选查询地点"
+              onChange={handleChangeLocation}
+              showSearch
+              filterOption={(input, option) =>
+                option?.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }
+            />
+            <div>
+              <span>只含GPU资源集群: <Switch checkedChildren="开启" unCheckedChildren="关闭" /></span>
+            </div>
+          </Space>
         </Col>
         <Col span={24}>
-          <LarkMap {...config} style={{ height: '500px' }}>
-            <Test data={data} location={location} />
+          <LarkMap {...config} style={{ height: '800px' }}>
+            <Mainer data={mapData} location={location} />
             <ZoomControl />
             <MouseLocationControl />
             <FullscreenControl />

@@ -3,28 +3,21 @@
  * @message: 测试调研组件
  * @since: 2023-11-20 14:36:53
  * @LastAuthor: panan panan2001@outlook.com
- * @lastTime: 2023-12-06 10:49:10
+ * @lastTime: 2023-12-09 17:04:02
  * @文件相对于项目的路径: /logic-umi/src/pages/Antv-l7/index.tsx
  */
 import React, { FC, useEffect, useRef, useState } from 'react'
 import {
   Scene,
-  PointLayer,
-  PolygonLayer,
-  LineLayer,
-  Source,
   Marker,
   MarkerLayer,
   Fullscreen,
   MouseLocation,
   Zoom,
-  LayerPopup,
   MapTheme,
-  Popup
 } from '@antv/l7';
 import { GaodeMap } from '@antv/l7-maps';
 import { data, RootObject } from './sandain'
-import Sandian from './sandian';
 
 const Text: FC<Record<string, any>> = () => {
   const [dataSource, setDataSource] = useState<RootObject[]>([])
@@ -111,9 +104,9 @@ const Text: FC<Record<string, any>> = () => {
 
     scene.on('mousewheel', () => {
       const markers = markerLayer.getMarkers() as Marker[]
-      // console.log(markers)
-      markers.forEach(marker => {
-      })
+      console.log(markers)
+      // markers.forEach(marker => {
+      // })
     })
   }
 

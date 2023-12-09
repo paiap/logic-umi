@@ -3,7 +3,7 @@
  * @message: mock数据
  * @since: 2023-12-06 14:46:04
  * @LastAuthor: panan panan2001@outlook.com
- * @lastTime: 2023-12-06 20:08:48
+ * @lastTime: 2023-12-08 16:47:49
  * @文件相对于项目的路径: /logic-umi/src/pages/antv-g6/mock.ts
  */
 
