@@ -11,16 +11,27 @@
     "start": "npm run dev"
   },
   "dependencies": {
+    "@amap/amap-jsapi-loader": "^1.0.1",
     "@ant-design/icons": "^5.0.1",
     "@ant-design/pro-components": "^2.4.4",
     "@antv/g2": "^5.1.5",
     "@antv/g2plot": "^2.4.31",
+    "@antv/g6": "^4.8.23",
+    "@antv/g6-react-node": "^1.4.5",
+    "@antv/l7": "^2.20.5",
+    "@antv/l7-draw": "^3.1.0",
+    "@antv/l7-maps": "^2.20.5",
+    "@antv/larkmap": "^1.4.8",
+    "@antv/vis-predict-engine": "^0.1.1",
     "@logicflow/core": "^1.2.7",
     "@logicflow/extension": "^1.2.7",
+    "@types/leaflet": "^1.9.8",
     "@umijs/max": "^4.0.69",
     "antd": "^5.4.0",
+    "leaflet": "^1.9.4",
     "react": "18.x",
     "react-dom": "18.x",
+    "react-leaflet": "^4.2.1",
     "umi-request": "^1.4.0"
   },
   "devDependencies": {
