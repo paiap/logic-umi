@@ -3,8 +3,8 @@
  * @message: 测试调研组件
  * @since: 2023-11-20 14:36:53
  * @LastAuthor: panan panan2001@outlook.com
- * @lastTime: 2023-12-10 09:17:23
- * @文件相对于项目的路径: /logic-umi/src/pages/antv-l7-react/index.tsx
+ * @lastTime: 2023-12-10 11:01:51
+ * @文件相对于项目的路径: /logic-umi/src/pages/paas/Paas/index.tsx
  */
 import React, { FC, useEffect, useState } from 'react'
 import type { LarkMapProps } from '@antv/larkmap';
@@ -31,7 +31,7 @@ const config: LarkMapProps = {
   logoVisible: false
 };
 
-const Text: FC<Record<string, any>> = () => {
+const AntvL7: FC<Record<string, any>> = () => {
 
   const [dataSource, setDataSource] = useState<RootObject>()
   const [options, setOptions] = useState<any[]>([])
@@ -86,7 +86,7 @@ const Text: FC<Record<string, any>> = () => {
             </Space>
           </div>
         </Col>
-        <Col span={12} pull={0}>
+        <Col span={12} style={{textAlign:'right'}}>
           <Space>
             <Input.Search
               style={{ minWidth: '220px' }}
@@ -94,7 +94,7 @@ const Text: FC<Record<string, any>> = () => {
             />
             <Select
               options={options}
-              style={{ minWidth: '220px' }}
+              style={{ minWidth: '220px',textAlign:'left' }}
               placeholder="筛选查询地点"
               onChange={handleChangeLocation}
               showSearch
@@ -117,9 +117,8 @@ const Text: FC<Record<string, any>> = () => {
           </LarkMap>
         </Col>
       </Row>
-
     </>
   )
 }
 
-export default Text
+export default AntvL7

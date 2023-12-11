@@ -3,7 +3,7 @@
  * @message:
  * @since: 2023-11-18 19:21:55
  * @LastAuthor: panan panan2001@outlook.com
- * @lastTime: 2023-12-06 17:01:28
+ * @lastTime: 2023-12-10 11:29:19
  * @文件相对于项目的路径: /logic-umi/.umirc.ts
  */
 import { defineConfig } from '@umijs/max';
@@ -54,11 +54,18 @@ const route = [
     path: '/antvg6Fruchterman',
     component: './antv-g6/Fruchterman',
   },
-  // {
-  //   name: 'react-LeafLet地图调研(舍弃)',
-  //   path: '/react-leaflet',
-  //   component: './LeafLet-react',
-  // },
+  {
+    name: 'paas首页',
+    path: '/paas-l7',
+    component: './paas',
+  },
+  {
+    name: '拓扑图',
+    path:'/paas-l7/antv-g6',
+    component: './paas/antv-g6',
+    hideInMenu: true,
+    // layout: false
+  },
   // {
   //   name: 'LeafLet地图调研(react-leaflet舍弃)',
   //   path: '/leaflet',

@@ -3,7 +3,7 @@
  * @message: mock数据
  * @since: 2023-11-23 14:04:49
  * @LastAuthor: panan panan2001@outlook.com
- * @lastTime: 2023-12-08 10:55:24
+ * @lastTime: 2023-12-10 09:16:21
  * @文件相对于项目的路径: /logic-umi/src/pages/antv-l7-react/sandain.ts
  */
 
@@ -276,116 +276,6 @@ export interface BasicInfo {
   clusterDesc: string;
   clusterLoc: string;
 }
-
-// export const mapData: RootObject = {
-//   devNormal: 1,
-//   devAbnormal: 2,
-//   testNormal: 1,
-//   testAbnormal: 3,
-//   stagingNormal: 1,
-//   stagingAbnormal: 2,
-//   prodNormal: 1,
-//   prodAbnormal: 2,
-//   location: [
-//     {
-//       latitude: 30.2084,
-//       longitude: 120.21201,
-//       name: '杭州五常',
-//       clusterCode: [
-//         {
-//           basicInfo: {
-//             clusterCode: 'paasdev',
-//             clusterName: 'paasdev开发集群',
-//             clusterState: '异常',
-//             clusterLevel: 'dev',
-//             clusterDesc: 'paasdev开发集群',
-//             clusterLoc: '杭州五常',
-//           },
-//           resourceInfo: {
-//             podNum: 4317,
-//             nodeNum: 29,
-//             namespaceNum: 10,
-//             workloadNum: 1492,
-//           },
-//           capacityInfo: {
-//             cpuUsageAvg: 1,
-//             cpuUsageLimit: 2,
-//             cpuCapUseful: 2,
-//             cpuCapSum: 2,
-//             memUsageAvg: 1,
-//             memUsageLimit: 2,
-//             memCapUseful: 2,
-//             memCapSum: 2,
-//             gpuUsageAvg: 1,
-//             gpuUsageLimit: 2,
-//             gpuCapUseful: 2,
-//             gpuCapSum: 2,
-//           },
-//         },
-//         {
-//           basicInfo: {
-//             clusterCode: 'paasdev',
-//             clusterName: 'paasdev开发集群',
-//             clusterState: '异常',
-//             clusterLevel: 'dev',
-//             clusterDesc: 'paasdev开发集群',
-//             clusterLoc: '杭州五常',
-//           },
-//           resourceInfo: {
-//             podNum: 4317,
-//             nodeNum: 29,
-//             namespaceNum: 10,
-//             workloadNum: 1492,
-//           },
-//           capacityInfo: {
-//             cpuUsageAvg: 1,
-//             cpuUsageLimit: 2,
-//             cpuCapUseful: 2,
-//             cpuCapSum: 2,
-//             memUsageAvg: 1,
-//             memUsageLimit: 2,
-//             memCapUseful: 2,
-//             memCapSum: 2,
-//             gpuUsageAvg: 1,
-//             gpuUsageLimit: 2,
-//             gpuCapUseful: 2,
-//             gpuCapSum: 2,
-//           },
-//         },
-//         {
-//           basicInfo: {
-//             clusterCode: 'paasdev',
-//             clusterName: 'paasdev开发集群',
-//             clusterState: '异常',
-//             clusterLevel: 'dev',
-//             clusterDesc: 'paasdev开发集群',
-//             clusterLoc: '杭州五常',
-//           },
-//           resourceInfo: {
-//             podNum: 4317,
-//             nodeNum: 29,
-//             namespaceNum: 10,
-//             workloadNum: 1492,
-//           },
-//           capacityInfo: {
-//             cpuUsageAvg: 1,
-//             cpuUsageLimit: 2,
-//             cpuCapUseful: 2,
-//             cpuCapSum: 2,
-//             memUsageAvg: 1,
-//             memUsageLimit: 2,
-//             memCapUseful: 2,
-//             memCapSum: 2,
-//             gpuUsageAvg: 1,
-//             gpuUsageLimit: 2,
-//             gpuCapUseful: 2,
-//             gpuCapSum: 2,
-//           },
-//         },
-//       ],
-//     },
-//   ],
-// };
 
 export const mapData: RootObject = {
   devNormal: 1,

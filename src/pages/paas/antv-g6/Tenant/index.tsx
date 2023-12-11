@@ -3,14 +3,14 @@
  * @message: antv/g6调研
  * @since: 2023-12-06 14:12:29
  * @LastAuthor: panan panan2001@outlook.com
- * @lastTime: 2023-12-10 09:09:56
- * @文件相对于项目的路径: /logic-umi/src/pages/antv-g6/Fruchterman.tsx
+ * @lastTime: 2023-12-11 09:24:55
+ * @文件相对于项目的路径: /logic-umi/src/pages/paas/antv-g6/Tenant/index.tsx
  */
 
 import { Edge, Graph, Node, Tooltip } from '@antv/g6';
 import React, { FC, useEffect, useRef, useState } from 'react'
 import { mockData } from './mock'
-import { Button, Col, Input, Row, Select, Space, message, Spin } from 'antd';
+import { Button, Col, Input, Row, Select, Space, message, Spin, SelectProps } from 'antd';
 import { Form } from 'antd';
 import { createRoot } from 'react-dom/client';
 
@@ -39,8 +39,28 @@ const strokes = [
   '#FF99C3',
 ];
 
+const filterOptions: SelectProps['options'] = [
+  {
+    label: '应用数大于100',
+    value: '1',
+  },
+  {
+    label: '负载大于200',
+    value: '2',
+  },
+  {
+    label: '流浪大于20Mb/s',
+    value: '3',
+  },
+  {
+    label: '资源利用率小于10%',
+    value: '4',
+  }
+]
 
-const AntvG6: FC<Record<string, any>> = () => {
+
+const TenantG6: FC<Record<string, any>> = () => {
+  const [dataSource, setDataSource] = useState<any>()
   const [loading, setLoading] = useState<boolean>(false)
   const nodeRef = useRef<Graph>()
   const clusterMapRef = useRef<Map<string, any>>()
@@ -69,9 +89,9 @@ const AntvG6: FC<Record<string, any>> = () => {
     trigger: 'click',
     // the types of items that allow the tooltip show up
     // 允许出现 tooltip 的 item 类型
-    itemTypes: ['node', 'edge'],
+    itemTypes: ['node'],
     // custom the tooltip's content
-    // 自定义 tooltip 内容
+    // 自定义 tooltip内容
     getContent: (e: any) => {
       const outDiv = document.createElement('div');
       const root = createRoot(outDiv);
@@ -82,10 +102,6 @@ const AntvG6: FC<Record<string, any>> = () => {
   });
 
   const addListener = (graph: Graph) => {
-    // graph.on('node:click', (ev) => {
-    //   const node = ev.item as Node; // 被点击的节点元素
-    //   console.log(node.getID())
-    // });
 
     graph.on('node:mousemove', (ev) => {
       const node = ev.item as Node; // 被点击的节点元素
@@ -153,19 +169,20 @@ const AntvG6: FC<Record<string, any>> = () => {
       })
     });
 
-    graph.on('afterlayout',() => {
+    graph.on('afterlayout', () => {
       setLoading(false)
     })
   }
 
 
   useEffect(() => {
-    setLoading(true)
-    if (nodeRef.current) {
-      nodeRef.current.read(mockData)
-      return
-    }
-    const nodes = mockData.nodes;
+    setDataSource(mockData)
+  }, [])
+
+  useEffect(() => {
+    if (!dataSource) return
+
+    const nodes = dataSource.nodes;
     const clusterMap = new Map();
     let clusterId = 0;
     nodes.forEach((node: any) => {
@@ -179,8 +196,21 @@ const AntvG6: FC<Record<string, any>> = () => {
       }
       node.style.fill = colors[cid % colors.length];
       node.style.stroke = strokes[cid % strokes.length];
+      node.size = node.liuliang > 30 ? (node.liuliang * 5) % 10 : 30
     });
     clusterMapRef.current = clusterMap;
+
+    setLoading(true)
+    if (nodeRef.current) {
+      console.log(dataSource, '更新拓扑图了')
+      // nodeRef.current.read(dataSource)
+      nodeRef.current.changeData(dataSource);
+      // nodeRef.current.render();
+      addListener(nodeRef.current)
+
+      return
+    }
+
 
     const container = document.getElementById('container');
     if (container) {
@@ -220,7 +250,8 @@ const AntvG6: FC<Record<string, any>> = () => {
           },
         },
       });
-      graph.data(mockData);
+
+      graph.data(dataSource);
       graph.render();
       nodeRef.current = graph
 
@@ -234,59 +265,82 @@ const AntvG6: FC<Record<string, any>> = () => {
         };
 
     }
-  }, [])
+  }, [dataSource])
 
   const handleSearch = () => {
     const formData = form.getFieldsValue()
     console.log(formData)
+
+    const currentData = {
+      nodes: [
+        {
+          id: '0',
+          label: '0',
+          cluster: 'a',
+          liuliang: 100
+        },
+        {
+          id: '1',
+          label: '1',
+          cluster: 'b',
+          liuliang: 40
+        },
+      ],
+      edges: [
+        {
+          source: '0',
+          target: '1',
+        },
+      ]
+    }
+
+    setDataSource(currentData)
   }
 
   return (
-    <Spin spinning={loading}>
-      <Row gutter={[10, 10]}>
-        <Col span={24}>
-          <Form form={form}>
-            <Space>
-              <Form.Item name='cluster'>
-                <Select
-                  style={{ minWidth: '200px' }}
-                  placeholder='集群搜索'
-                  options={[]}
-                />
-              </Form.Item>
-              <Form.Item
-                name='name'
-              >
-                <Input
-                  style={{ minWidth: '200px' }}
-                  placeholder='租户名搜索'
-                />
-              </Form.Item>
-              <Form.Item name='nameAdmin'>
-                <Input
-                  style={{ minWidth: '200px' }}
-                  placeholder='租户名管理员搜索'
-                />
-              </Form.Item>
-              <Form.Item name='select'>
-                <Select
-                  style={{ minWidth: '200px' }}
-                  placeholder='按条件搜索'
-                  options={[]}
-                />
-              </Form.Item>
-              <Form.Item>
-                <Button type='primary' onClick={handleSearch}>搜索</Button>
-              </Form.Item>
-            </Space>
-          </Form>
-        </Col>
-        <Col span={24}>
-          <div id="container" ></div>
-        </Col>
-      </Row>
-    </Spin>
+    <>
+      <Spin spinning={loading}>
+        <Row gutter={[10, 10]}>
+          <Col span={20}>
+            <Form form={form}>
+              <Space>
+                <Form.Item
+                  name='name'
+                >
+                  <Input
+                    style={{ minWidth: '200px' }}
+                    placeholder='租户名搜索'
+                  />
+                </Form.Item>
+                <Form.Item name='nameAdmin'>
+                  <Input
+                    style={{ minWidth: '200px' }}
+                    placeholder='租户名管理员搜索'
+                  />
+                </Form.Item>
+                <Form.Item name='select'>
+                  <Select
+                    style={{ minWidth: '200px' }}
+                    placeholder='按条件搜索'
+                    options={filterOptions}
+                  />
+                </Form.Item>
+                <Form.Item>
+                  <Button type='primary' onClick={handleSearch}>查询</Button>
+                </Form.Item>
+              </Space>
+            </Form>
+          </Col>
+          <Col span={4} style={{ textAlign: 'right', lineHeight: '32px' }}>
+            <span>租户总数：{dataSource?.nodes?.length || '-'}</span>
+          </Col>
+          <Col span={24}>
+            <div id="container" ></div>
+          </Col>
+        </Row>
+      </Spin>
+    </>
   )
 }
 
-export default AntvG6
+export default TenantG6
