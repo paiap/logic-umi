@@ -1,18 +1,10 @@
 /*
  * @creater: panan
- * @message: 
- * @since: 2023-12-10 09:18:01
- * @LastAuthor: panan panan2001@outlook.com
- * @lastTime: 2023-12-10 11:18:25
- * @文件相对于项目的路径: /logic-umi/src/pages/paas/Paas/Mainer.tsx
- */
-/*
- * @creater: panan
  * @message: 测试调研组件
  * @since: 2023-11-20 14:36:53
  * @LastAuthor: panan panan2001@outlook.com
- * @lastTime: 2023-12-08 11:24:07
- * @文件相对于项目的路径: /logic-umi/src/pages/antv-l7-react/Mainer.tsx
+ * @lastTime: 2023-12-13 14:20:24
+ * @文件相对于项目的路径: /logic-umi/src/pages/paas/Paas/Mainer.tsx
  */
 import React, { FC, useEffect, useMemo, useState } from 'react'
 import { Location, RootObject } from './sandain'
@@ -20,7 +12,7 @@ import {
   useScene,
   PointLayer,
   LayerPopup,
-  TextLayer
+  TextLayer,
 } from '@antv/larkmap';
 import MapPoup from './MapPoup';
 
@@ -47,7 +39,7 @@ const Mainer: FC<iMainer> = (props) => {
   useEffect(() => {
     if (!location) return
     scene.setCenter(location)
-    scene.setZoom(5)
+    scene.setZoom(16)
   }, [location])
 
   /**
@@ -78,6 +70,7 @@ const Mainer: FC<iMainer> = (props) => {
       />
     )
   }, [dataSource])
+
   return (
     <>
       <PointLayer
@@ -113,7 +106,6 @@ const Mainer: FC<iMainer> = (props) => {
         }}
       />
       {renderLayerPoup}
-
     </>
   )
 }

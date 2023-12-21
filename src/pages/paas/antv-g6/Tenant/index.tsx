@@ -3,14 +3,14 @@
  * @message: antv/g6调研
  * @since: 2023-12-06 14:12:29
  * @LastAuthor: panan panan2001@outlook.com
- * @lastTime: 2023-12-11 09:24:55
+ * @lastTime: 2023-12-18 14:41:27
  * @文件相对于项目的路径: /logic-umi/src/pages/paas/antv-g6/Tenant/index.tsx
  */
 
 import { Edge, Graph, Node, Tooltip } from '@antv/g6';
 import React, { FC, useEffect, useRef, useState } from 'react'
 import { mockData } from './mock'
-import { Button, Col, Input, Row, Select, Space, message, Spin, SelectProps } from 'antd';
+import { Button, Col, Input, Row, Select, Space, message, Spin, SelectProps, Modal } from 'antd';
 import { Form } from 'antd';
 import { createRoot } from 'react-dom/client';
 
@@ -58,10 +58,10 @@ const filterOptions: SelectProps['options'] = [
   }
 ]
 
-
 const TenantG6: FC<Record<string, any>> = () => {
   const [dataSource, setDataSource] = useState<any>()
   const [loading, setLoading] = useState<boolean>(false)
+  const [open, setOpen] = useState<boolean>(false)
   const nodeRef = useRef<Graph>()
   const clusterMapRef = useRef<Map<string, any>>()
   const [form] = Form.useForm()
@@ -172,8 +172,13 @@ const TenantG6: FC<Record<string, any>> = () => {
     graph.on('afterlayout', () => {
       setLoading(false)
     })
-  }
 
+    graph.on('nodeselectchange', (e) => {
+      console.log(e.selectedItems, e.select);
+      const show = e.select as boolean
+      setOpen(show)
+    });
+  }
 
   useEffect(() => {
     setDataSource(mockData)
@@ -223,7 +228,14 @@ const TenantG6: FC<Record<string, any>> = () => {
         height,
         plugins: [tooltip],
         modes: {
-          default: ['drag-canvas', 'drag-node', 'zoom-canvas'],
+          default: ['drag-canvas', 'drag-node', 'zoom-canvas', 'brush-select'],
+          altSelect: [
+            {
+              type: 'brush-select',
+              trigger: 'drag',
+            },
+            'drag-node',
+          ],
         },
         layout: {
           type: 'fruchterman',
@@ -250,6 +262,9 @@ const TenantG6: FC<Record<string, any>> = () => {
           },
         },
       });
+
+      // registerNode('test', createNodeFromReact(newNode));
+      // appenAutoShapeListener(graph)//当你创建好Graph后，如果需要使用在节点内定义的事件
 
       graph.data(dataSource);
       graph.render();
@@ -339,6 +354,15 @@ const TenantG6: FC<Record<string, any>> = () => {
           </Col>
         </Row>
       </Spin>
+      <Modal
+      open={open}
+      visible={open}
+      onCancel={() => setOpen(false)}
+      footer={null}
+      title="批量操作"
+      >
+        <span>111</span>
+      </Modal>
     </>
   )
 }

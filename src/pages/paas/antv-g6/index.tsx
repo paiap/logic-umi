@@ -3,7 +3,7 @@
  * @message: antv/g6调研
  * @since: 2023-12-06 14:12:29
  * @LastAuthor: panan panan2001@outlook.com
- * @lastTime: 2023-12-11 09:20:36
+ * @lastTime: 2023-12-13 20:55:15
  * @文件相对于项目的路径: /logic-umi/src/pages/paas/antv-g6/index.tsx
  */
 
@@ -35,7 +35,6 @@ const AntvG6: FC<Record<string, any>> = () => {
         children: '222'
       },
     ]
-
     setItem(tabItem)
 
     setKeys('1')
