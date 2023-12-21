@@ -3,7 +3,7 @@
  * @message:
  * @since: 2023-11-18 19:21:55
  * @LastAuthor: panan panan2001@outlook.com
- * @lastTime: 2023-12-10 11:29:19
+ * @lastTime: 2023-12-19 10:49:42
  * @文件相对于项目的路径: /logic-umi/.umirc.ts
  */
 import { defineConfig } from '@umijs/max';
@@ -66,11 +66,17 @@ const route = [
     hideInMenu: true,
     // layout: false
   },
-  // {
-  //   name: 'LeafLet地图调研(react-leaflet舍弃)',
-  //   path: '/leaflet',
-  //   component: './LeafLet',
-  // },
+  {
+    name: 'LeafLet地图调研(react-leaflet舍弃)',
+    path: '/leaflet',
+    component: './LeafLet',
+  },
+
+  {
+    name: 'l7-瓦片',
+    path: '/gaode',
+    component: './Gaode',
+  },
 
   // {
   //   name: '高德地图调研',

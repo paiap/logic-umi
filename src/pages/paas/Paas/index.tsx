@@ -3,9 +3,10 @@
  * @message: 测试调研组件
  * @since: 2023-11-20 14:36:53
  * @LastAuthor: panan panan2001@outlook.com
- * @lastTime: 2023-12-10 11:01:51
+ * @lastTime: 2023-12-13 16:32:49
  * @文件相对于项目的路径: /logic-umi/src/pages/paas/Paas/index.tsx
  */
+
 import React, { FC, useEffect, useState } from 'react'
 import type { LarkMapProps } from '@antv/larkmap';
 import {
@@ -18,6 +19,7 @@ import {
 import { Col, Input, Row, Select, Space, Switch } from 'antd';
 import { mapData, RootObject, Location } from './sandain'
 import Mainer from './Mainer';
+import Mainer2 from './Mainer2';
 
 const config: LarkMapProps = {
   mapType: 'Gaode',
@@ -26,7 +28,7 @@ const config: LarkMapProps = {
     pitch: 20,
     style: 'darkblue',
     center: [120.21201, 30.2084],
-    zoom: 11,
+    zoom: 16,
   },
   logoVisible: false
 };
@@ -86,7 +88,7 @@ const AntvL7: FC<Record<string, any>> = () => {
             </Space>
           </div>
         </Col>
-        <Col span={12} style={{textAlign:'right'}}>
+        <Col span={12} style={{ textAlign: 'right' }}>
           <Space>
             <Input.Search
               style={{ minWidth: '220px' }}
@@ -94,7 +96,7 @@ const AntvL7: FC<Record<string, any>> = () => {
             />
             <Select
               options={options}
-              style={{ minWidth: '220px',textAlign:'left' }}
+              style={{ minWidth: '220px', textAlign: 'left' }}
               placeholder="筛选查询地点"
               onChange={handleChangeLocation}
               showSearch
@@ -110,6 +112,7 @@ const AntvL7: FC<Record<string, any>> = () => {
         <Col span={24}>
           <LarkMap {...config} style={{ height: '800px' }}>
             <Mainer data={mapData} location={location} />
+            <Mainer2 />
             <ZoomControl />
             <MouseLocationControl />
             <FullscreenControl />
