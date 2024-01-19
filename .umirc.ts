@@ -3,7 +3,7 @@
  * @message:
  * @since: 2023-11-18 19:21:55
  * @LastAuthor: panan panan2001@outlook.com
- * @lastTime: 2024-01-03 21:18:12
+ * @lastTime: 2024-01-09 20:58:45
  * @文件相对于项目的路径: /logic-umi/.umirc.ts
  */
 import { defineConfig } from '@umijs/max';
@@ -43,11 +43,11 @@ const route = [
   //   path: '/myprotable',
   //   component: './Package',
   // },
-  // {
-  //   name: 'antv/l7-map空间地图调研',
-  //   path: '/antvl7',
-  //   component: './antv-l7-react',
-  // },
+  {
+    name: 'antv/l7-map空间地图调研',
+    path: '/antvl7',
+    component: './antv-l7-react',
+  },
 
   // {
   //   name: 'antv/l6拓扑图调研',
@@ -59,11 +59,11 @@ const route = [
   //   path: '/antvg6Fruchterman',
   //   component: './antv-g6/Fruchterman',
   // },
-  // {
-  //   name: 'paas首页',
-  //   path: '/paas-l7',
-  //   component: './paas',
-  // },
+  {
+    name: 'paas首页',
+    path: '/paas-l7',
+    component: './paas',
+  },
   // {
   //   name: '拓扑图',
   //   path:'/paas-l7/antv-g6',
@@ -83,11 +83,11 @@ const route = [
   //   component: './Gaode',
   // },
 
-  // {
-  //   name: '高德地图调研',
-  //   path: '/gaode',
-  //   component: './Gaode',
-  // },
+  {
+    name: '高德地图调研',
+    path: '/gaode',
+    component: './Gaode',
+  },
 ];
 
 export default defineConfig({

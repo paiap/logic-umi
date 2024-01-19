@@ -10,9 +10,6 @@ import React, { FC, useEffect, useRef, useState } from 'react'
 import {
   Scene,
   PointLayer,
-  PolygonLayer,
-  LineLayer,
-  Source,
   Marker,
   MarkerLayer,
   Fullscreen,
