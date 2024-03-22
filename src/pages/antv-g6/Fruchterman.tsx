@@ -3,7 +3,7 @@
  * @message: antv/g6调研
  * @since: 2023-12-06 14:12:29
  * @LastAuthor: panan panan2001@outlook.com
- * @lastTime: 2023-12-10 09:09:56
+ * @lastTime: 2024-01-31 13:41:59
  * @文件相对于项目的路径: /logic-umi/src/pages/antv-g6/Fruchterman.tsx
  */
 
@@ -80,6 +80,7 @@ const AntvG6: FC<Record<string, any>> = () => {
       return outDiv;
     },
   });
+  // #eb4
 
   const addListener = (graph: Graph) => {
     // graph.on('node:click', (ev) => {

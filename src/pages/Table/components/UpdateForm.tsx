@@ -120,7 +120,14 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => (
       <ProFormDateTimePicker
         name="time"
         label="开始时间"
-        rules={[{ required: true, message: '请选择开始时间！' }]}
+        rules={[{ required: true, message: '请选择开始时间！' },{
+          validator(rule, value, callback) {
+              if (value && value.format('HH:mm') < '09:30') {
+                callback('开始时间不能早于9:30');
+              }
+              callback();
+          },
+        }]}
       />
       <ProFormSelect
         name="frequency"

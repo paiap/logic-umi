@@ -1,9 +1,9 @@
 /*
  * @creater: panan
- * @message:
+ * @message:umirc配置文件
  * @since: 2023-11-18 19:21:55
  * @LastAuthor: panan panan2001@outlook.com
- * @lastTime: 2024-01-22 10:54:43
+ * @lastTime: 2024-02-05 19:41:08
  * @文件相对于项目的路径: /logic-umi/.umirc.ts
  */
 import { defineConfig } from '@umijs/max';
@@ -22,6 +22,16 @@ const route = [
     name: 'tcloud',
     path: '/tcloud',
     component: './tcloud',
+  },
+  {
+    name: 'echarts',
+    path: '/echarts',
+    component: './Echart',
+  },
+  {
+    name: 'Collapse折叠面板',
+    path: '/collapse',
+    component: './Collapse/index2',
   },
   // {
   //   name:'beard',
